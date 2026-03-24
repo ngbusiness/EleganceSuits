@@ -1,0 +1,144 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Classic Navy Blue",
+            "category": "klasicna",
+            "price": 45900,
+            "oldPrice": null,
+            "image": "/assets/img/classic-navy-blue.jpg",
+            "badge": null,
+            "description": "Elegantno teget odelo od premium vune, savršeno za poslovne prilike.",
+            "featured": true
+        },
+        {
+            "id": 2,
+            "name": "Charcoal Executive",
+            "category": "poslovna",
+            "price": 52900,
+            "oldPrice": 62900,
+            "image": "/assets/img/charcoal-executive.jpg",
+            "badge": "Sniženje",
+            "description": "Antracit odelo za modernog biznismena, izrađeno od fine italijanske vune.",
+            "featured": true
+        },
+        {
+            "id": 3,
+            "name": "Midnight Black Tuxedo",
+            "category": "svecanost",
+            "price": 78900,
+            "oldPrice": null,
+            "image": "/assets/img/midnight-black-tuxedo.jpg",
+            "badge": "Novo",
+            "description": "Luksuzni crni smoking za posebne prilike i svečane večeri.",
+            "featured": true
+        },
+        {
+            "id": 4,
+            "name": "Modern Slim Fit Gray",
+            "category": "moderna",
+            "price": 39900,
+            "oldPrice": null,
+            "image": "/assets/img/modern-slim-fit-gray.webp",
+            "badge": null,
+            "description": "Sivo odelo modernog kroja, idealno za svakodnevno nošenje.",
+            "featured": true
+        },
+        {
+            "id": 5,
+            "name": "Brown Herringbone",
+            "category": "klasicna",
+            "price": 48900,
+            "oldPrice": null,
+            "image": "/assets/img/brown-herringbone.jpg",
+            "badge": null,
+            "description": "Braon odelo sa herringbone uzorkom, klasična elegancija.",
+            "featured": false
+        },
+        {
+            "id": 6,
+            "name": "Light Blue Summer",
+            "category": "letnja",
+            "price": 35900,
+            "oldPrice": 42900,
+            "image": "/assets/img/light-blue-summer.webp",
+            "badge": "Sniženje",
+            "description": "Svetlo plavo letnje odelo od laganog materijala.",
+            "featured": false
+        },
+        {
+            "id": 7,
+            "name": "Burgundy Velvet",
+            "category": "svecanost",
+            "price": 69900,
+            "oldPrice": null,
+            "image": "/assets/img/burgundy-velvet.jpg",
+            "badge": "Premium",
+            "description": "Bordo baršunasto odelo za ekskluzivne događaje.",
+            "featured": false
+        },
+        {
+            "id": 8,
+            "name": "Pinstripe Business",
+            "category": "poslovna",
+            "price": 55900,
+            "oldPrice": null,
+            "image": "/assets/img/pinstripe-business.webp",
+            "badge": null,
+            "description": "Odelo sa tankim prugama, savršeno za kancelariju.",
+            "featured": false
+        },
+        {
+            "id": 9,
+            "name": "Cream Linen",
+            "category": "letnja",
+            "price": 32900,
+            "oldPrice": null,
+            "image": "/assets/img/cream-linen.avif",
+            "badge": "Novo",
+            "description": "Krem laneno odelo, idealno za letnje svečanosti.",
+            "featured": false
+        },
+        {
+            "id": 10,
+            "name": "Double Breasted Navy",
+            "category": "klasicna",
+            "price": 59900,
+            "oldPrice": null,
+            "image": "/assets/img/double-breasted-navy.webp",
+            "badge": null,
+            "description": "Dvored teget odelo za istinski sofisticiran izgled.",
+            "featured": false
+        },
+        {
+            "id": 11,
+            "name": "Slim Fit Black",
+            "category": "moderna",
+            "price": 44900,
+            "oldPrice": 54900,
+            "image": "/assets/img/slim-fit-black.webp",
+            "badge": "Sniženje",
+            "description": "Crno odelo uskog kroja za modernog gentelmena.",
+            "featured": false
+        },
+        {
+            "id": 12,
+            "name": "Wedding Black",
+            "category": "svecanost",
+            "price": 89900,
+            "oldPrice": null,
+            "image": "/assets/img/wedding-black.jpg",
+            "badge": "Premium",
+            "description": "Belo venčano odelo za najsrećniji dan u životu.",
+            "featured": false
+        }
+    ],
+    "categories": [
+        { "id": "sve", "name": "Svi Proizvodi" },
+        { "id": "klasicna", "name": "Klasična Odela" },
+        { "id": "moderna", "name": "Moderna Odela" },
+        { "id": "poslovna", "name": "Poslovna Odela" },
+        { "id": "svecanost", "name": "Svečana Odela" },
+        { "id": "letnja", "name": "Letnja Odela" }
+    ]
+}

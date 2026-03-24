@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Elegance Suits - Nova Kolekcija</title>
+  <link>https://ngbusiness.github.io/EleganceSuits/index.html</link>
+  <description>Najnoviji modeli muških odela, košulja i modnih dodataka.</description>
+  <language>sr-rs</language>
+
+  <item>
+    <title>Plavo Slim-Fit Odelo</title>
+    <link>https://ngbusiness.github.io/EleganceSuits/shop.html</link>
+    <description>Nova kolekcija proleće 2026. Italijanski kroj i vrhunski materijali.</description>
+  </item>
+
+  <item>
+    <title>Popust na sve košulje</title>
+    <link>https://ngbusiness.github.io/EleganceSuits/shop.html</link>
+    <description>Iskoristite 20% popusta na sve modele košulja do kraja meseca.</description>
+  </item>
+</channel>
+</rss>
