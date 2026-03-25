@@ -254,6 +254,7 @@ function updateCartUI() {
             if(totalSpan) totalSpan.textContent = '0 RSD';
         } else {
             let total = 0;
+            // ... unutar updateCartUI funkcije ...
             miniCartContainer.innerHTML = cart.map(item => {
                 total += item.price * item.quantity;
                 return `
@@ -262,17 +263,17 @@ function updateCartUI() {
                         <div class="cart-item-info">
                             <h4>${item.name}</h4>
                             <p class="price-font">${formatPrice(item.price)}</p>
-                        </div>
-                        <div class="cart-item-actions">
+                            
                             <div class="qty-mini">
                                 <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, -1)">-</button>
                                 <span>${item.quantity}</span>
                                 <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, 1)">+</button>
                             </div>
-                            <button class="btn-remove-mini" onclick="removeFromCart(${item.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
                         </div>
+                        
+                        <button class="btn-remove-mini" onclick="removeFromCart(${item.id})" title="Ukloni proizvod">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>`;
             }).join('');
             if(totalSpan) totalSpan.textContent = formatPrice(total);
