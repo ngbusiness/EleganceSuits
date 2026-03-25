@@ -241,18 +241,32 @@ function updateCartUI() {
             if(totalSpan) totalSpan.textContent = '0 RSD';
         } else {
             let total = 0;
-            miniCartContainer.innerHTML = cart.map(item => {
-                total += item.price * item.quantity;
-                return `
-                    <div class="cart-item-mini">
-                        <img src="${item.image}" alt="${item.name}">
-                        <div class="cart-item-info">
-                            <h4>${item.name}</h4>
-                            <p>${item.quantity} x ${item.price} RSD</p>
-                        </div>
-                    </div>
-                `;
-            }).join('');
+            // Unutar updateCartUI funkcije, deo gde se mapira korpa:
+miniCartContainer.innerHTML = cart.map(item => {
+    total += item.price * item.quantity;
+    return `
+        <div class="cart-item-mini" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
+            <div style="display:flex; gap:10px; align-items:center;">
+                <img src="${item.image}" width="40" height="50" style="object-fit:cover;">
+                <div>
+                    <h4 style="font-size:0.85rem; margin:0;">${item.name}</h4>
+                    <p style="font-size:0.8rem; margin:0;">${item.price} RSD</p>
+                </div>
+            </div>
+            
+            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:5px;">
+                <div style="display:flex; align-items:center; gap:8px; background:#f4f4f4; border-radius:4px; padding:2px 5px;">
+                    <button onclick="changeQuantity(${item.id}, -1)" style="border:none; background:none; cursor:pointer; font-weight:bold;">-</button>
+                    <span style="font-size:0.9rem; font-weight:bold;">${item.quantity}</span>
+                    <button onclick="changeQuantity(${item.id}, 1)" style="border:none; background:none; cursor:pointer; font-weight:bold;">+</button>
+                </div>
+                <button onclick="removeFromCart(${item.id})" style="border:none; background:none; color:#e74c3c; cursor:pointer; font-size:0.8rem;">
+                    <i class="fas fa-trash"></i> Ukloni
+                </button>
+            </div>
+        </div>
+    `;
+}).join('');
             if(totalSpan) totalSpan.textContent = total.toLocaleString() + ' RSD';
         }
     }
@@ -285,17 +299,65 @@ function addToCart(id) {
 
     const existing = cart.find(item => item.id === id);
     if (existing) {
-        existing.quantity++;
+        if (existing.quantity < 5) {
+            existing.quantity++;
+        } else {
+            // Umesto alerta, možemo samo da ignorišemo ili ispišemo u konzoli
+            console.log("Dostignut limit za ovaj proizvod.");
+            return; 
+        }
     } else {
         cart.push({ ...product, quantity: 1 });
     }
 
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    
-    updateCartUI(); // Osveži broj u navbaru
-    showMiniCart(); // Otvori side meni umesto alerta
+    updateCartUI();
+    showMiniCart();
 }
 
+// Funkcija za promenu količine (+ ili -)
+function changeQuantity(id, delta) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const product = cart.find(item => item.id === id);
+
+    if (product) {
+        const newQuantity = product.quantity + delta;
+
+        // Provera: Min 1, Max 5
+        if (newQuantity >= 1 && newQuantity <= 5) {
+            product.quantity = newQuantity;
+        } else if (newQuantity < 1) {
+            // Ako padne ispod 1, opcionalno možemo i da obrišemo, 
+            // ali je bolje da ostavimo na 1 ili da korisnik klikne X
+            return; 
+        } else if (newQuantity > 5) {
+            // Ovde možeš dodati neki diskretan tekst umesto alerta ako hoćeš
+            console.log("Maksimalna količina je 5");
+            return;
+        }
+    }
+
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartUI();
+    
+    // Ako smo na stranici korpa.html, osveži i veliku tabelu
+    if (typeof renderFullCart === "function") {
+        renderFullCart();
+    }
+}
+
+// Funkcija za potpuno uklanjanje proizvoda
+function removeFromCart(id) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    cart = cart.filter(item => item.id !== id);
+    
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    updateCartUI();
+    
+    if (typeof renderFullCart === "function") {
+        renderFullCart();
+    }
+}
 // ========================================
 // 7. OSTALE FUNKCIJE (Forme & Nav)
 // ========================================
