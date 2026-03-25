@@ -702,6 +702,14 @@ p {
     margin: 0 auto;
 }
 
+/* DODATO: Responsivnost za formu na malim ekranima */
+@media (max-width: 576px) {
+    .newsletter-form {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+}
+
 .newsletter-form input {
     flex: 1;
     padding: 14px 20px;
@@ -709,35 +717,36 @@ p {
     font-family: var(--font-body);
     font-size: 0.9rem;
     font-variant-numeric: lining-nums;
+    border-radius: 4px; /* Malo zaobljenja za lepši izgled */
 }
 
 .newsletter-form input:focus {
     outline: 2px solid var(--color-accent);
 }
 
-
 .newsletter-msg {
     margin-top: 20px;
     font-family: var(--font-body);
     font-weight: 500;
-    min-height: 1.2rem; 
+    min-height: 1.5rem; /* Blago povećano */
     opacity: 0;
-    visibility: hidden; 
+    visibility: hidden;
     transition: var(--transition);
+    text-align: center;
 }
-
 
 .newsletter-msg.active {
     opacity: 1;
     visibility: visible;
 }
 
+/* Svetlije boje za bolji kontrast na tamnoj pozadini */
 .newsletter-msg.success {
-    color: #27ae60; 
+    color: #2ecc71; 
 }
 
 .newsletter-msg.error {
-    color: var(--color-accent); 
+    color: #ff7675; /* Bolje se vidi od tamno crvene na tamno plavoj/crnoj */
 }
 
 /* --- RESPONSIVE FIX --- */
