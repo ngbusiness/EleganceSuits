@@ -989,6 +989,11 @@ p {
     transition: var(--transition);
 }
 
+/* Dodajemo ovo da bi JS mogao da prikaže dugme */
+.btn-load-more.active {
+    display: inline-block;
+}
+
 .btn-load-more:hover {
     background-color: var(--color-primary);
     color: var(--color-white);

@@ -139,12 +139,12 @@ function displayProducts(containerId) {
     }
 
     if (btnLoadMore) {
-        if (visibleCount < filteredProducts.length) {
-            btnLoadMore.classList.add('active');
-        } else {
-            btnLoadMore.classList.remove('active');
-        }
+    if (visibleCount < filteredProducts.length) {
+        btnLoadMore.classList.add('active'); 
+    } else {
+        btnLoadMore.classList.remove('active');
     }
+}
 }
 
 // ========================================
