@@ -38,25 +38,22 @@ function loadLayout() {
 function renderHeader(links) {
     const navMenu = document.querySelector(".nav-menu");
     if (!navMenu) return;
-    const currentPath = window.location.pathname;
-
-    // Generišemo linkove
+    
     let html = links.map(link => `
-        <li><a href="${link.url}" class="nav-link ${currentPath.includes(link.url) ? "active" : ""}">${link.name}</a></li>
+        <li><a href="${link.url}" class="nav-link">${link.name}</a></li>
     `).join('');
 
-    // Dodajemo ikonicu korpe na kraj navigacije
+    // Dodajemo korpu direktno u listu
     html += `
         <li>
-            <a href="korpa.html" class="nav-link cart-icon-wrapper">
-                <i class="fas fa-shopping-cart"></i> 
-                <span id="cart-count">0</span>
+            <a href="#" id="open-cart-btn" class="nav-link" style="position:relative;">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cart-count" style="position:absolute; top:-5px; right:-10px; background:var(--color-accent); color:#000; border-radius:50%; padding:2px 6px; font-size:10px; font-weight:bold; display:none;">0</span>
             </a>
         </li>
     `;
-
     navMenu.innerHTML = html;
-    updateCartIcon(); // Odmah osvežavamo broj pri učitavanju stranice
+    updateCartUI(); // Osveži broj čim se učita header
 }
 
 function renderFooter(footerData) {
@@ -220,43 +217,79 @@ function initGlobalEvents() {
     });
 }
 
-function updateCartIcon() {
-    try {
-        const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-        const countElement = document.getElementById('cart-count');
-        
-        if (countElement) {
-            // Računamo ukupan broj komada u korpi
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            countElement.textContent = totalItems;
-            
-            // Ako je prazna, sakrij broj ili ga ostavi na 0 (po tvom izboru)
-            countElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+function updateCartUI() {
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const countSpan = document.getElementById('cart-count');
+    const miniCartContainer = document.getElementById('mini-cart-items');
+    const totalSpan = document.getElementById('mini-cart-total');
+
+    // 1. Brojač u navbaru
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    if (countSpan) {
+        countSpan.textContent = totalItems;
+        countSpan.style.display = totalItems > 0 ? 'inline-block' : 'none';
+    }
+
+    // 2. Lista u Draweru
+    if (miniCartContainer) {
+        if (cart.length === 0) {
+            miniCartContainer.innerHTML = '<p>Korpa je prazna.</p>';
+            if(totalSpan) totalSpan.textContent = '0 RSD';
+        } else {
+            let total = 0;
+            miniCartContainer.innerHTML = cart.map(item => {
+                total += item.price * item.quantity;
+                return `
+                    <div class="cart-item-mini">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <h4>${item.name}</h4>
+                            <p>${item.quantity} x ${item.price} RSD</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            if(totalSpan) totalSpan.textContent = total.toLocaleString() + ' RSD';
         }
-    } catch (err) {
-        console.error("Greška pri ažuriranju ikonice korpe:", err);
     }
 }
 
-function addToCart(id) {
-    try {
-        let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
-        const product = allProducts.find(p => p.id === id);
-        if (!product) return;
+// Funkcije za otvaranje i zatvaranje
+function showMiniCart() {
+    document.getElementById('cart-drawer').classList.add('active');
+    document.getElementById('cart-overlay').classList.add('active');
+    updateCartUI();
+}
 
-        const existing = cart.find(item => item.id === id);
-        if (existing) existing.quantity++;
-        else cart.push({ ...product, quantity: 1 });
-
-        localStorage.setItem(CART_KEY, JSON.stringify(cart));
-        
-        // OVO DODAJ:
-        updateCartIcon(); 
-        
-        alert(`Odelo "${product.name}" je dodato u korpu!`);
-    } catch (err) {
-        console.error("LocalStorage greška:", err);
+// Event listeneri
+document.addEventListener('click', (e) => {
+    if (e.target.closest('#open-cart-btn')) {
+        e.preventDefault();
+        showMiniCart();
     }
+    if (e.target.id === 'close-cart' || e.target.id === 'cart-overlay') {
+        document.getElementById('cart-drawer').classList.remove('active');
+        document.getElementById('cart-overlay').classList.remove('active');
+    }
+});
+
+function addToCart(id) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const product = allProducts.find(p => p.id === id);
+    
+    if (!product) return;
+
+    const existing = cart.find(item => item.id === id);
+    if (existing) {
+        existing.quantity++;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    
+    updateCartUI(); // Osveži broj u navbaru
+    showMiniCart(); // Otvori side meni umesto alerta
 }
 
 // ========================================
@@ -317,4 +350,83 @@ function showFormMessage(type, msg) {
     el.textContent = msg;
     el.style.display = 'block';
     setTimeout(() => el.style.display = 'none', 4000);
+}
+// Logika za korpa.html
+function renderFullCart() {
+    const container = document.getElementById('cart-table-container');
+    if (!container) return;
+
+    const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+
+    if (cart.length === 0) {
+        container.innerHTML = '<p class="text-center">Vaša korpa je trenutno prazna. <a href="proizvodi.html">Vratite se na kupovinu.</a></p>';
+        return;
+    }
+
+    let total = 0;
+    let html = `
+        <table class="cart-table" style="width:100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #eee; text-align: left;">
+                    <th style="padding: 10px;">Slika</th>
+                    <th>Proizvod</th>
+                    <th>Cena</th>
+                    <th>Količina</th>
+                    <th>Ukupno</th>
+                    <th>Ukloni</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        html += `
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 10px;"><img src="${item.image}" width="50"></td>
+                <td>${item.name}</td>
+                <td>${item.price} RSD</td>
+                <td>${item.quantity}</td>
+                <td>${itemTotal} RSD</td>
+                <td><button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fas fa-trash"></i></button></td>
+            </tr>
+        `;
+    });
+
+    html += `
+            </tbody>
+        </table>
+        <div style="text-align: right; margin-top: 20px;">
+            <h3>Ukupno za uplatu: ${total.toLocaleString()} RSD</h3>
+            <button onclick="processOrder()" class="btn-checkout" style="max-width: 250px; float: right;">ZAVRŠI KUPOVINU</button>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+// Funkcija za uklanjanje jednog artikla
+function removeFromCart(id) {
+    let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    renderFullCart();
+    updateCartUI();
+}
+
+// Finalni Checkout - Čišćenje korpe i poruka
+function processOrder() {
+    // 1. Sakrij tabelu
+    document.getElementById('cart-table-container').style.display = 'none';
+    
+    // 2. Prikaži zelenu poruku
+    const msg = document.getElementById('order-success-msg');
+    if (msg) msg.style.display = 'block';
+
+    // 3. Obriši korpu iz memorije
+    localStorage.removeItem(CART_KEY);
+    
+    // 4. Resetuj broj u navbaru
+    updateCartUI();
 }

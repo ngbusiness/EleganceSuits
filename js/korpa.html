@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <title>Elegance Suits | Korpa</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">ELEGANCE<span>SUITS</span></a>
+            <ul class="nav-menu">
+                </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="padding-top: 120px; min-height: 70vh;">
+        <h1 class="section-title">Vaša Korpa</h1>
+        
+        <div id="cart-table-container"></div>
+
+        <div id="order-success-msg" style="display: none; background: #d4edda; color: #155724; padding: 20px; border-radius: 5px; text-align: center; margin-top: 20px;">
+            <i class="fas fa-check-circle"></i> Vaša narudžbina je uspešno poslata!
+        </div>
+    </main>
+
+    <footer id="footer-main-grid"></footer>
+    <div id="footer-copy-space"></div>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Specifična logika samo za ovu stranu
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFullCart();
+        });
+    </script>
+</body>
+</html>
