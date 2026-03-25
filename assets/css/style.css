@@ -1040,6 +1040,18 @@ p {
     border-bottom: 1px solid #eee;
 }
 
+/* Stil za ćeliju sa slikom i imenom (umesto inline flex-a) */
+.cart-product-cell {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-product-name {
+    font-weight: 600;
+    font-family: var(--font-heading);
+}
+
 .cart-img {
     width: 70px;
     height: 90px;
@@ -1051,6 +1063,13 @@ p {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.qty-number {
+    font-weight: bold;
+    min-width: 25px;
+    display: inline-block;
+    text-align: center;
 }
 
 .btn-qty {
@@ -1087,8 +1106,16 @@ p {
     border-top: 2px solid var(--color-primary);
 }
 
+.btn-checkout {
+    width: 100%;
+    max-width: 320px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+/* Klase za kontrolu vidljivosti (umesto .style.display) */
 .order-success {
-    display: none; /* JS aktivira */
+    display: none; 
     background: #d4edda;
     color: #155724;
     padding: 30px;
@@ -1098,15 +1125,31 @@ p {
     border: 1px solid #c3e6cb;
 }
 
+/* Kada JS doda .active, poruka o uspehu se vidi */
+.order-success.active {
+    display: block;
+}
+
+/* Klasa za sakrivanje tabele nakon kupovine */
+.hidden {
+    display: none !important;
+}
+
 .order-success i {
     font-size: 2rem;
     display: block;
     margin-bottom: 10px;
 }
 
-/* Raleway fix za cifre */
+.cart-empty-msg {
+    padding: 80px 0;
+    text-align: center;
+}
+
+/* Raleway fix za cifre i cene */
 .cart-table td, 
-.cart-summary h2 {
+.cart-summary h2,
+.price-font {
     font-variant-numeric: lining-nums;
 }
 

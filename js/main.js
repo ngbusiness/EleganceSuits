@@ -14,11 +14,21 @@ let visibleCount = INITIAL_COUNT;
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
     loadLayout(); 
-    initFeaturedProducts(); // Za index.html
-    initAllProducts();      // Za proizvodi.html
+    initFeaturedProducts(); 
+    initAllProducts();      
     initNewsletterForm();
     initContactForm();
-    initGlobalEvents();     // Klikovi na korpu i load more
+    initGlobalEvents();     
+
+    const cartContainer = document.getElementById('cart-table-container');
+    if (cartContainer) {
+        fetch('data/products.json')
+            .then(res => res.json())
+            .then(data => {
+                allProducts = data.products; // Popunjavamo globalni niz
+                renderFullCart();           // Tek sad renderujemo
+            });
+    }
 });
 
 // ========================================
@@ -415,9 +425,9 @@ function renderFullCart() {
 
     if (cart.length === 0) {
         container.innerHTML = `
-            <div class="text-center">
+            <div class="text-center cart-empty-msg">
                 <p>Vaša korpa je trenutno prazna.</p>
-                <a href="proizvodi.html" class="btn-load-more active" style="display:inline-block; margin-top:20px;">Idi u prodavnicu</a>
+                <a href="proizvodi.html" class="btn btn-primary">Idi u prodavnicu</a>
             </div>`;
         return;
     }
@@ -441,19 +451,19 @@ function renderFullCart() {
         total += itemTotal;
         html += `
             <tr>
-                <td class="cart-cell-product">
+                <td class="cart-product-cell">
                     <img src="${item.image}" alt="${item.name}" class="cart-img">
-                    <strong>${item.name}</strong>
+                    <span class="cart-product-name">${item.name}</span>
                 </td>
-                <td>${formatPrice(item.price)}</td>
+                <td class="price-font">${formatPrice(item.price)}</td>
                 <td>
                     <div class="qty-controls">
                         <button class="btn-qty" onclick="changeQuantity(${item.id}, -1)">-</button>
-                        <span>${item.quantity}</span>
+                        <span class="qty-number">${item.quantity}</span>
                         <button class="btn-qty" onclick="changeQuantity(${item.id}, 1)">+</button>
                     </div>
                 </td>
-                <td>${formatPrice(itemTotal)}</td>
+                <td class="price-font">${formatPrice(itemTotal)}</td>
                 <td>
                     <button class="btn-remove" onclick="removeFromCart(${item.id})">
                         <i class="fas fa-trash-alt"></i>
@@ -466,8 +476,8 @@ function renderFullCart() {
             </tbody>
         </table>
         <div class="cart-summary">
-            <h2>Ukupno: ${formatPrice(total)}</h2>
-            <button onclick="processOrder()" class="btn-load-more active" style="width: 100%; max-width: 300px;">ZAVRŠI KUPOVINU</button>
+            <h2 class="price-font">Ukupno: ${formatPrice(total)}</h2>
+            <button onclick="processOrder()" class="btn btn-primary btn-checkout">ZAVRŠI KUPOVINU</button>
         </div>`;
 
     container.innerHTML = html;
