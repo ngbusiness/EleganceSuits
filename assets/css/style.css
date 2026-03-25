@@ -555,6 +555,7 @@ p {
 .newsletter-content h2 {
     color: var(--color-white);
     margin-bottom: 15px;
+    font-family: var(--font-heading);
 }
 
 .newsletter-content p {
@@ -576,10 +577,46 @@ p {
     border: none;
     font-family: var(--font-body);
     font-size: 0.9rem;
+    font-variant-numeric: lining-nums;
 }
 
 .newsletter-form input:focus {
     outline: 2px solid var(--color-accent);
+}
+
+
+.newsletter-msg {
+    margin-top: 20px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    min-height: 1.2rem; 
+    opacity: 0;
+    transition: var(--transition);
+}
+
+
+.newsletter-msg.active {
+    opacity: 1;
+}
+
+.newsletter-msg.success {
+    color: #27ae60; 
+}
+
+.newsletter-msg.error {
+    color: var(--color-accent); 
+}
+
+/* --- RESPONSIVE FIX --- */
+@media (max-width: 576px) {
+    .newsletter-form {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+    
+    .newsletter-form button {
+        width: 100%;
+    }
 }
 
 /* 
