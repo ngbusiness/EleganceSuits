@@ -1,11 +1,84 @@
-
-
 // DOM Sadrzaj se ucitava
 document.addEventListener('DOMContentLoaded', function() {
-    initNavigation();
+    loadLayout(); // Učitavanje headera i footera
     initFeaturedProducts();
     initNewsletterForm();
+    initContactForm();
+    initAllProducts();
 });
+
+// Dinamičko učitavanje headera i footera
+function loadLayout() {
+    fetch('data/menu.json')
+        .then(res => res.json())
+        .then(data => {
+            renderHeader(data.navigation);
+            renderFooter(data.footer);
+            
+            // Inicijalizacija navigacije nakon što se HTML generiše
+            initNavigation(); 
+        })
+        .catch(err => console.error("Greška:", err));
+}
+
+function renderHeader(links) {
+    const navMenu = document.querySelector(".nav-menu");
+    if (!navMenu) return;
+
+    const currentPath = window.location.pathname;
+    let html = "";
+    links.forEach(link => {
+        const isActive = currentPath.includes(link.url) ? "active" : "";
+        html += `<li><a href="${link.url}" class="nav-link ${isActive}">${link.name}</a></li>`;
+    });
+    navMenu.innerHTML = html;
+}
+
+function renderFooter(footerData) {
+    // Selektujemo container unutar footera gde idu kolone
+    const footerContainer = document.querySelector(".footer .container");
+    if (!footerContainer) return;
+
+    let html = "";
+
+    // 1. Kolona: O nama (About)
+    html += `
+        <div class="footer-col">
+            <h4>${footerData.about.title}</h4>
+            <p>${footerData.about.text}</p>
+        </div>`;
+
+    // 2. i 3. Kolona: Navigacija i Informacije (iz columns niza)
+    footerData.columns.forEach(col => {
+        html += `
+            <div class="footer-col">
+                <h4>${col.title}</h4>
+                <ul>
+                    ${col.links.map(l => `<li><a href="${l.url}">${l.name}</a></li>`).join('')}
+                </ul>
+            </div>`;
+    });
+
+    // 4. Kolona: Kontakt
+    const c = footerData.contact;
+    html += `
+        <div class="footer-col">
+            <h4>${c.title}</h4>
+            <p>${c.address}</p>
+            <p>${c.city}</p>
+            <p>Tel: ${c.phone}</p>
+            <p>Email: ${c.email}</p>
+        </div>`;
+
+    // Ubacujemo sve kolone u container
+    footerContainer.innerHTML = html;
+
+    const copyrightHtml = `<div class="footer-bottom-text" style="width:100%; text-align:center; margin-top:20px; border-top:1px solid #333; padding-top:20px;">
+        <p>${footerData.copyright}</p>
+    </div>`;
+    
+    footerContainer.insertAdjacentHTML('beforeend', copyrightHtml);
+}
 
 // Navigacija
 function initNavigation() {
@@ -80,8 +153,7 @@ function loadFeaturedProducts(container) {
     xhr.send();
 }
 
-/* 
-   Prikazi proizvode
+/* Prikazi proizvode
 */
 function displayProducts(products, container) {
     if (products.length === 0) {
@@ -122,8 +194,7 @@ function formatPrice(price) {
     return price.toLocaleString('sr-RS') + ' RSD';
 }
 
-/* 
-   Svi proizvodi
+/* Svi proizvodi
 */
 function initAllProducts() {
     const productsContainer = document.getElementById('all-products');

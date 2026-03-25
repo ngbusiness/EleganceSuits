@@ -1,0 +1,42 @@
+{
+  "navigation": [
+    { "name": "Početna", "url": "https://ngbusiness.github.io/EleganceSuits/index.html" },
+    { "name": "Proizvodi", "url": "https://ngbusiness.github.io/EleganceSuits/proizvodi.html" },
+    { "name": "Kontakt", "url": "https://ngbusiness.github.io/EleganceSuits/kontakt.html" },
+    { "name": "Autor", "url": "https://ngbusiness.github.io/EleganceSuits/autor.html" },
+    { "name": "Dokumentacija", "url": "Dokumentacija.pdf" }
+  ],
+  "footer": {
+    "about": {
+      "title": "ELEGANCE SUITS",
+      "text": "Vaša destinacija za ekskluzivna muška odela. Elegancija, kvalitet, stil."
+    },
+    "columns": [
+      {
+        "title": "Navigacija",
+        "links": [
+          { "name": "Početna", "url": "https://ngbusiness.github.io/EleganceSuits/index.html" },
+          { "name": "Proizvodi", "url": "https://ngbusiness.github.io/EleganceSuits/proizvodi.html" },
+          { "name": "Kontakt", "url": "https://ngbusiness.github.io/EleganceSuits/kontakt.html" }
+        ]
+      },
+      {
+        "title": "Informacije",
+        "links": [
+          { "name": "Autor", "url": "https://ngbusiness.github.io/EleganceSuits/autor.html" },
+          { "name": "Dokumentacija", "url": "Dokumentacija.pdf" },
+          { "name": "RSS", "url": "https://ngbusiness.github.io/EleganceSuits/rss.xml" },
+          { "name": "Sitemap", "url": "https://ngbusiness.github.io/EleganceSuits/sitemap.xml" }
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Kontakt",
+      "address": "Bulevar Oslobođenja 100",
+      "city": "21000 Novi Sad, Srbija",
+      "phone": "+381 21 123 456",
+      "email": "info@elegancesuits.rs"
+    },
+    "copyright": "© 2026 Elegance Suits. Sva prava zadržana."
+  }
+}
