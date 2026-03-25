@@ -43,17 +43,21 @@ function renderHeader(links) {
         <li><a href="${link.url}" class="nav-link">${link.name}</a></li>
     `).join('');
 
-    // Dodajemo korpu direktno u listu
+    // Dodajemo ikonicu korpe (SVG) sa brojačem
     html += `
-        <li>
-            <a href="#" id="open-cart-btn" class="nav-link" style="position:relative;">
-                <i class="fas fa-shopping-bag"></i>
-                <span id="cart-count" style="position:absolute; top:-5px; right:-10px; background:var(--color-accent); color:#000; border-radius:50%; padding:2px 6px; font-size:10px; font-weight:bold; display:none;">0</span>
+        <li class="cart-li">
+            <a href="#" id="open-cart-btn" class="nav-link cart-icon-anchor">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="cart-count">0</span>
             </a>
         </li>
     `;
     navMenu.innerHTML = html;
-    updateCartUI(); // Osveži broj čim se učita header
+    updateCartUI(); 
 }
 
 function renderFooter(footerData) {
