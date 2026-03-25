@@ -12,13 +12,16 @@
         <nav class="nav-container">
             <a href="index.html" class="logo">ELEGANCE<span>SUITS</span></a>
             <ul class="nav-menu"></ul>
+            <div class="nav-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
         </nav>
     </header>
 
     <main class="container cart-main-content">
         <h1 class="section-title">Vaša Korpa</h1>
-        
-        <div id="cart-table-container"></div>
+        <div id="cart-table-container">
+            </div>
 
         <div id="order-success-msg" class="order-success">
             <i class="fas fa-check-circle"></i>
@@ -29,8 +32,10 @@
         </div>
     </main>
 
-    <footer id="footer-main-grid"></footer>
-    <div id="footer-copy-space"></div>
+    <footer class="footer">
+        <div id="footer-main-grid" class="container footer-grid"></div>
+        <div id="footer-copy-space" class="footer-bottom"></div>
+    </footer>
 
     <script src="js/main.js"></script>
 </body>
