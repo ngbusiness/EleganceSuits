@@ -10,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <nav class="navbar">
@@ -27,22 +26,18 @@
         </div>
     </header>
 
-    <!-- Header sekcija -->
     <section class="page-header">
         <h1>Naša Kolekcija</h1>
         <p>Otkrijte širok izbor elegantnih odela za svaku priliku</p>
     </section>
 
-    <!-- Proizvodi sekcija -->
     <section class="products-page">
         <div class="container">
-            <!-- Filter sekcija -->
             <div class="filter-section">
                 <div class="filter-group">
                     <label for="category-filter">Kategorija:</label>
                     <select id="category-filter">
                         <option value="sve">Sve kategorije</option>
-                        <!-- Kategorije ucitavam ajaxom -->
                     </select>
                 </div>
                 <div class="filter-group">
@@ -57,32 +52,26 @@
                 </div>
                 <div class="search-box">
                     <input type="text" id="search-input" placeholder="Pretraži proizvode...">
-                    <button id="search-btn">Pretraži</button>
+                    <button id="search-btn" class="btn-search">Pretraži</button>
                 </div>
             </div>
 
-            <!-- Mreza proizvoda -->
             <div class="all-products-grid" id="all-products">
-                <!-- Proizvode ucitavam ajaxom -->
+            </div>
+
+            <div id="pagination-wrapper" class="pagination-wrapper">
+                <button id="btn-load-more" class="btn btn-load-more">Prikaži više</button>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
-    <div class="container">
-        <div class="footer-grid" id="footer-main-grid"></div>
-        
-        <div class="footer-bottom" id="footer-copy-space"></div>
-    </div>
-</footer>
+        <div class="container">
+            <div class="footer-grid" id="footer-main-grid"></div>
+            <div class="footer-bottom" id="footer-copy-space"></div>
+        </div>
+    </footer>
 
     <script src="js/main.js"></script>
-    <script>
-        // Inicijalizacija stranice proizvoda
-        document.addEventListener('DOMContentLoaded', function() {
-            initAllProducts();
-        });
-    </script>
-</body>
+    </body>
 </html>

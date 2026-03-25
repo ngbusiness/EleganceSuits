@@ -855,7 +855,57 @@ p {
     color: var(--color-primary);
 }
 
+/* ========================================
+   PAGINACIJA (LOAD MORE) & KORPA
+   ======================================== */
 
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+    width: 100%;
+}
+
+.btn-load-more {
+    display: none; /* JS kontroliše vidljivost */
+    padding: 16px 45px;
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-load-more:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* Dugme za korpu unutar product-card */
+.btn-add-to-cart {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-to-cart:hover {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+}
 
 /* ========================================
    RESPONSIVE DESIGN
