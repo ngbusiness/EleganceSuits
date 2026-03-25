@@ -39,9 +39,24 @@ function renderHeader(links) {
     const navMenu = document.querySelector(".nav-menu");
     if (!navMenu) return;
     const currentPath = window.location.pathname;
-    navMenu.innerHTML = links.map(link => `
+
+    // Generišemo linkove
+    let html = links.map(link => `
         <li><a href="${link.url}" class="nav-link ${currentPath.includes(link.url) ? "active" : ""}">${link.name}</a></li>
     `).join('');
+
+    // Dodajemo ikonicu korpe na kraj navigacije
+    html += `
+        <li>
+            <a href="korpa.html" class="nav-link cart-icon-wrapper">
+                <i class="fas fa-shopping-cart"></i> 
+                <span id="cart-count">0</span>
+            </a>
+        </li>
+    `;
+
+    navMenu.innerHTML = html;
+    updateCartIcon(); // Odmah osvežavamo broj pri učitavanju stranice
 }
 
 function renderFooter(footerData) {
@@ -205,6 +220,24 @@ function initGlobalEvents() {
     });
 }
 
+function updateCartIcon() {
+    try {
+        const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        const countElement = document.getElementById('cart-count');
+        
+        if (countElement) {
+            // Računamo ukupan broj komada u korpi
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            countElement.textContent = totalItems;
+            
+            // Ako je prazna, sakrij broj ili ga ostavi na 0 (po tvom izboru)
+            countElement.style.display = totalItems > 0 ? 'inline-block' : 'none';
+        }
+    } catch (err) {
+        console.error("Greška pri ažuriranju ikonice korpe:", err);
+    }
+}
+
 function addToCart(id) {
     try {
         let cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
@@ -216,6 +249,10 @@ function addToCart(id) {
         else cart.push({ ...product, quantity: 1 });
 
         localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        
+        // OVO DODAJ:
+        updateCartIcon(); 
+        
         alert(`Odelo "${product.name}" je dodato u korpu!`);
     } catch (err) {
         console.error("LocalStorage greška:", err);

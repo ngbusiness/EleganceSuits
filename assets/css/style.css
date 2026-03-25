@@ -235,6 +235,26 @@ p {
     bottom: -8px;
 }
 
+.cart-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#cart-count {
+    background-color: var(--color-accent);
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    right: -15px;
+    min-width: 18px;
+    text-align: center;
+}
+
 /* 
    HERO sekcija
 */
