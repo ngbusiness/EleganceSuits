@@ -13,22 +13,27 @@ let visibleCount = INITIAL_COUNT;
 // 2. INICIJALIZACIJA (DOMContentLoaded)
 // ========================================
 document.addEventListener('DOMContentLoaded', function() {
+    // 1. Učitaj osnovni izgled (Meni i Footer)
     loadLayout(); 
-    initFeaturedProducts(); 
-    initAllProducts();      
-    initNewsletterForm();
-    initContactForm();
-    initGlobalEvents();     
 
+    // 2. Ako smo na stranici korpe, moramo prvo imati proizvode da bismo znali cene
     const cartContainer = document.getElementById('cart-table-container');
     if (cartContainer) {
         fetch('data/products.json')
             .then(res => res.json())
             .then(data => {
-                allProducts = data.products; // Popunjavamo globalni niz
-                renderFullCart();           // Tek sad renderujemo
-            });
+                allProducts = data.products; 
+                renderFullCart();           
+            })
+            .catch(err => console.error("Greška pri učitavanju proizvoda za korpu:", err));
     }
+
+    // 3. Ostale inicijalizacije
+    initFeaturedProducts(); 
+    initAllProducts();      
+    initNewsletterForm();
+    initContactForm();
+    initGlobalEvents();     
 });
 
 // ========================================
@@ -253,12 +258,10 @@ function updateCartUI() {
                 total += item.price * item.quantity;
                 return `
                     <div class="cart-item-mini">
+                        <img src="${item.image}" alt="${item.name}" class="cart-img-mini">
                         <div class="cart-item-info">
-                            <img src="${item.image}" alt="${item.name}" class="cart-img-mini">
-                            <div>
-                                <h4>${item.name}</h4>
-                                <p>${formatPrice(item.price)}</p>
-                            </div>
+                            <h4>${item.name}</h4>
+                            <p class="price-font">${formatPrice(item.price)}</p>
                         </div>
                         <div class="cart-item-actions">
                             <div class="qty-mini">
