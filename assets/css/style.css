@@ -302,7 +302,6 @@ p {
 }
 
 /* Stavka u mini korpi */
-/* Stavka u mini korpi - Osveženo */
 .cart-item-mini {
     display: flex;
     align-items: center;
@@ -329,11 +328,13 @@ p {
     margin: 0 0 5px 0; 
     font-family: var(--font-heading);
     color: var(--color-primary);
+    line-height: 1.2;
 }
 
 .cart-item-info p {
     font-size: 0.85rem;
     margin-bottom: 8px;
+    color: #666;
 }
 
 
@@ -341,8 +342,8 @@ p {
     display: flex;
     flex-direction: column;
     align-items: flex-end; 
-    gap: 10px;
-    min-width: 80px;
+    gap: 8px;
+    min-width: 85px; 
 }
 
 .qty-mini {
@@ -375,7 +376,6 @@ p {
     font-weight: 600;
     min-width: 15px;
     text-align: center;
-    font-variant-numeric: lining-nums; 
 }
 
 
@@ -384,17 +384,17 @@ p {
     border: none;
     color: #bbb; 
     cursor: pointer;
-    font-size: 0.75rem; 
-    padding: 2px 5px;
+    font-size: 0.9rem; 
+    padding: 5px;
     transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-remove-mini:hover {
-    color: #e74c3c; /* Crvena na hover */
-    transform: scale(1.05);
+    color: #e74c3c; 
+    transform: scale(1.15);
 }
 
 /* Footer Drawera */
