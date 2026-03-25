@@ -259,23 +259,23 @@ function updateCartUI() {
             total += item.price * item.quantity;
             // Proveri ovaj deo u svom main.js
             return `
-                <div class="cart-item-mini">
-                    <img src="${item.image}" alt="${item.name}" class="cart-img-mini">
-                    <div class="cart-item-info">
-                        <h4>${item.name}</h4>
-                        <p>${formatPrice(item.price)}</p>
+            <div class="cart-item-mini">
+                <img src="${item.image}" alt="${item.name}" class="cart-img-mini">
+                <div class="cart-item-info">
+                    <h4>${item.name}</h4>
+                    <p>${formatPrice(item.price)}</p>
+                </div>
+                <div class="cart-item-actions">
+                    <div class="qty-mini">
+                        <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, 1)">+</button>
                     </div>
-                    <div class="cart-item-actions">
-                        <div class="qty-mini">
-                            <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, -1)">-</button>
-                            <span>${item.quantity}</span>
-                            <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, 1)">+</button>
-                        </div>
-                        <button class="btn-remove-mini" onclick="removeFromCart(${item.id})">
-                            Ukloni
-                        </button>
-                    </div>
-                </div>`;
+                    <button class="btn-remove-mini" onclick="removeFromCart(${item.id})">
+                        Ukloni
+                    </button>
+                </div>
+            </div>`;
         }).join('');
             if(totalSpan) totalSpan.textContent = formatPrice(total);
         }
