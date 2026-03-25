@@ -1098,7 +1098,9 @@ p {
 
 /* Dodajemo ovo da bi JS mogao da prikaže dugme */
 .btn-load-more.active {
-    display: inline-block;
+    display: inline-block !important; /* !important osigurava da pregazi display: none */
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 .btn-load-more:hover {
