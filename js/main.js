@@ -271,8 +271,8 @@ function updateCartUI() {
                             <span>${item.quantity}</span>
                             <button class="btn-qty-mini" onclick="changeQuantity(${item.id}, 1)">+</button>
                         </div>
-                        <button class="btn-remove-mini" onclick="removeFromCart(${item.id})" title="Ukloni">
-                            <i class="fas fa-times"></i>
+                        <button class="btn-remove-mini" onclick="removeFromCart(${item.id})">
+                            Ukloni
                         </button>
                     </div>
                 </div>`;
