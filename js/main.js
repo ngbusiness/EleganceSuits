@@ -40,12 +40,12 @@ document.addEventListener('DOMContentLoaded', function() {
 // 3. DINAMIČKI LAYOUT (Header & Footer)
 // ========================================
 function loadLayout() {
-    fetch('data/menu.json')
+    fetch('data/menu.json') 
         .then(res => res.json())
         .then(data => {
             renderHeader(data.navigation);
             renderFooter(data.footer);
-            initNavigation(); 
+            initNavigation(); // Ovo je bitno za mobilni meni!
         })
         .catch(err => console.error("Greška pri učitavanju layout-a:", err));
 }
