@@ -2,6 +2,7 @@
 <html lang="sr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elegance Suits | Korpa</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,13 +16,17 @@
         </nav>
     </header>
 
-    <main class="container" style="padding-top: 120px; min-height: 70vh;">
+    <main class="container cart-main-content">
         <h1 class="section-title">Vaša Korpa</h1>
         
         <div id="cart-table-container"></div>
 
-        <div id="order-success-msg" style="display: none; background: #d4edda; color: #155724; padding: 20px; border-radius: 5px; text-align: center; margin-top: 20px;">
-            <i class="fas fa-check-circle"></i> Vaša narudžbina je uspešno poslata!
+        <div id="order-success-msg" class="order-success">
+            <i class="fas fa-check-circle"></i>
+            <h2>Narudžbina uspešna!</h2>
+            <p>Hvala Vam na poverenju. Naš tim će Vas kontaktirati uskoro.</p>
+            <br>
+            <a href="index.html" class="btn-load-more" style="display:inline-block;">Nazad na početnu</a>
         </div>
     </main>
 
@@ -30,7 +35,6 @@
 
     <script src="js/main.js"></script>
     <script>
-        // Specifična logika samo za ovu stranu
         document.addEventListener('DOMContentLoaded', () => {
             renderFullCart();
         });

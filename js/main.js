@@ -425,16 +425,19 @@ function renderFullCart() {
     const cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
 
     if (cart.length === 0) {
-        container.innerHTML = '<p class="text-center">Vaša korpa je trenutno prazna. <a href="proizvodi.html">Vratite se na kupovinu.</a></p>';
+        container.innerHTML = `
+            <div class="text-center">
+                <p>Vaša korpa je trenutno prazna.</p>
+                <a href="proizvodi.html" class="btn-load-more" style="display:inline-block; margin-top:20px;">Idi u prodavnicu</a>
+            </div>`;
         return;
     }
 
     let total = 0;
     let html = `
-        <table class="cart-table" style="width:100%; border-collapse: collapse; margin-top: 20px;">
+        <table class="cart-table">
             <thead>
-                <tr style="border-bottom: 2px solid #eee; text-align: left;">
-                    <th style="padding: 10px;">Slika</th>
+                <tr>
                     <th>Proizvod</th>
                     <th>Cena</th>
                     <th>Količina</th>
@@ -449,13 +452,25 @@ function renderFullCart() {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         html += `
-            <tr style="border-bottom: 1px solid #eee;">
-                <td style="padding: 10px;"><img src="${item.image}" width="50"></td>
-                <td>${item.name}</td>
-                <td>${item.price} RSD</td>
-                <td>${item.quantity}</td>
-                <td>${itemTotal} RSD</td>
-                <td><button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fas fa-trash"></i></button></td>
+            <tr>
+                <td style="display:flex; align-items:center; gap:20px;">
+                    <img src="${item.image}" alt="${item.name}" class="cart-img">
+                    <strong>${item.name}</strong>
+                </td>
+                <td>${formatPrice(item.price)}</td>
+                <td>
+                    <div class="qty-controls">
+                        <button class="btn-qty" onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="btn-qty" onclick="changeQuantity(${item.id}, 1)">+</button>
+                    </div>
+                </td>
+                <td>${formatPrice(itemTotal)}</td>
+                <td>
+                    <button class="btn-remove" onclick="removeFromCart(${item.id})">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
             </tr>
         `;
     });
@@ -463,9 +478,9 @@ function renderFullCart() {
     html += `
             </tbody>
         </table>
-        <div style="text-align: right; margin-top: 20px;">
-            <h3>Ukupno za uplatu: ${total.toLocaleString()} RSD</h3>
-            <button onclick="processOrder()" class="btn-checkout" style="max-width: 250px; float: right;">ZAVRŠI KUPOVINU</button>
+        <div class="cart-summary">
+            <h2>Ukupno: ${formatPrice(total)}</h2>
+            <button onclick="processOrder()" class="btn-load-more" style="width: 100%; max-width: 300px;">ZAVRŠI KUPOVINU</button>
         </div>
     `;
 
