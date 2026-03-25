@@ -35,23 +35,21 @@ function renderHeader(links) {
 }
 
 function renderFooter(footerData) {
-    // Selektujemo footer-grid jer on drži CSS raspored za kolone
-    const footerGrid = document.querySelector(".footer-grid");
-    // Selektujemo container za copyright jer on ide van grida
-    const footerContainer = document.querySelector(".footer .container");
+    const grid = document.getElementById("footer-main-grid");
+    const bottom = document.getElementById("footer-copy-space");
     
-    if (!footerGrid || !footerContainer) return;
+    if (!grid || !bottom) return;
 
     let html = "";
 
-    // 1. Kolona: O nama
+    // 1. Kolona (2fr) - O nama
     html += `
         <div class="footer-col">
-            <h4>${footerData.about.title}</h4>
+            <h3 class="footer-logo">${footerData.about.title}</h3>
             <p>${footerData.about.text}</p>
         </div>`;
 
-    // 2. i 3. Kolona: Navigacija i Informacije
+    // 2. i 3. Kolona (1fr + 1fr) - Dinamičke kolone iz JSON-a (Navigacija i Informacije)
     footerData.columns.forEach(col => {
         html += `
             <div class="footer-col">
@@ -62,7 +60,7 @@ function renderFooter(footerData) {
             </div>`;
     });
 
-    // 4. Kolona: Kontakt
+    // 4. Kolona (1.5fr) - Kontakt
     const c = footerData.contact;
     html += `
         <div class="footer-col">
@@ -73,18 +71,9 @@ function renderFooter(footerData) {
             <p>Email: ${c.email}</p>
         </div>`;
 
-    // Ubacujemo kolone u GRID (ovo popravlja vizuelni deo)
-    footerGrid.innerHTML = html;
-
-    // Proveravamo da li footer-bottom već postoji da ga ne bismo duplirali
-    let footerBottom = document.querySelector(".footer-bottom");
-    if (!footerBottom) {
-        footerBottom = document.createElement("div");
-        footerBottom.className = "footer-bottom";
-        footerContainer.appendChild(footerBottom);
-    }
-    
-    footerBottom.innerHTML = `<p>${footerData.copyright}</p>`;
+    // Upucavanje u HTML
+    grid.innerHTML = html;
+    bottom.innerHTML = `<p>${footerData.copyright}</p>`;
 }
 
 // Navigacija
