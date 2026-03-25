@@ -1132,7 +1132,7 @@ p {
 
 /* Kada JS doda .active, poruka o uspehu se vidi */
 .order-success.active {
-    display: block;
+    display: block !important;
 }
 
 /* Klasa za sakrivanje tabele nakon kupovine */
