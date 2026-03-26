@@ -293,12 +293,34 @@ p {
     padding-bottom: 15px;
 }
 
+.cart-drawer-header h3 {
+    font-family: 'Playfair Display', serif; 
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--color-primary);
+}
+
 #close-cart {
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 2rem; 
     cursor: pointer;
-    color: var(--color-primary);
+    color: #333;
+    transition: transform 0.3s ease, color 0.3s ease;
+    line-height: 1;
+    padding: 0 5px;
+}
+
+#close-cart:hover {
+    color: var(--color-primary); 
+    transform: rotate(90deg); 
+}
+
+/* Osiguranje za listu artikala */
+#mini-cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
 /* Stavka u mini korpi */
@@ -702,7 +724,6 @@ p {
     margin: 0 auto;
 }
 
-/* DODATO: Responsivnost za formu na malim ekranima */
 @media (max-width: 576px) {
     .newsletter-form {
         flex-direction: column;
@@ -717,7 +738,7 @@ p {
     font-family: var(--font-body);
     font-size: 0.9rem;
     font-variant-numeric: lining-nums;
-    border-radius: 4px; /* Malo zaobljenja za lepši izgled */
+    border-radius: 4px; 
 }
 
 .newsletter-form input:focus {
@@ -728,7 +749,7 @@ p {
     margin-top: 20px;
     font-family: var(--font-body);
     font-weight: 500;
-    min-height: 1.5rem; /* Blago povećano */
+    min-height: 1.5rem; 
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
@@ -740,13 +761,13 @@ p {
     visibility: visible;
 }
 
-/* Svetlije boje za bolji kontrast na tamnoj pozadini */
+
 .newsletter-msg.success {
     color: #2ecc71; 
 }
 
 .newsletter-msg.error {
-    color: #ff7675; /* Bolje se vidi od tamno crvene na tamno plavoj/crnoj */
+    color: #ff7675; 
 }
 
 /* --- RESPONSIVE FIX --- */
@@ -1301,6 +1322,8 @@ p {
 .price-font {
     font-variant-numeric: lining-nums;
 }
+
+
 
 /* ========================================
    RESPONSIVE DESIGN
