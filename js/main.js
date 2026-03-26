@@ -159,18 +159,34 @@ function displayProducts(containerId) {
 // ========================================
 function initAllProducts() {
     const container = document.getElementById('all-products');
+    // Ako nismo na stranici sa svim proizvodima, prekidamo funkciju
     if (!container) return;
 
     fetch('data/products.json')
         .then(res => res.json())
         .then(data => {
+            // 1. Punimo globalni niz podacima (ovo popravlja korpu)
             allProducts = data.products;
+            
+            // 2. Pravimo kopiju za filtriranje
             filteredProducts = [...allProducts];
+            
+            // 3. Popunjavamo dropdown kategorijama iz JSON-a
             populateCategories(data.categories);
+            
+            // 4. Ispisujemo prvu turu proizvoda (INITIAL_COUNT)
             displayProducts('all-products');
+            
+            // 5. Aktiviramo slušače za filtere i pretragu
             setupFilterListeners();
+
+            // 6. Osvežavamo brojač u korpi ako već ima nečega u localStorage
+            updateCartUI();
         })
-        .catch(err => console.error("Greška:", err));
+        .catch(err => {
+            console.error("Greška pri učitavanju svih proizvoda:", err);
+            container.innerHTML = '<p class="text-center">Trenutno nije moguće učitati proizvode.</p>';
+        });
 }
 
 function setupFilterListeners() {
