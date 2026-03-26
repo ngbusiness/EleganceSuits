@@ -120,7 +120,9 @@ function createProductCard(product) {
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
                 <p class="product-price">${oldPriceHtml} ${formatPrice(product.price)}</p>
-                <button class="btn-add-to-cart" data-id="${product.id}">Dodaj u korpu</button>
+                <button class="btn-add-to-cart" onclick="addToCart(${product.id})">
+                    <i class="fas fa-shopping-bag"></i> Dodaj u korpu
+                </button>
             </div>
         </article>
     `;
