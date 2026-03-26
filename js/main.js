@@ -415,11 +415,13 @@ function initContactForm() {
 
         // REGEX DEFINICIJE
         // Ime i Prezime: Dve reči, svaka počinje velikim slovom, min 2 slova (npr. Petar Petrović)
-        const nameRegex = /^[A-ZČĆŽŠĐ][a-zčćžšđ]{1,15}\s[A-ZČĆŽŠĐ][a-zčćžšđ]{1,20}$/;
+        const nameRegex = /^[A-Za-zČčĆćŽžŠšĐđ\s]{3,50}$/;
         // Telefon: Prihvata 06x... ili +3816x... (9 do 11 cifara ukupno)
-        const phoneRegex = /^(\+381|0)6[0-9]\d{6,8}$/;
+        const phoneRegex = /^(\+381|0)6[0-9]\s?[0-9]{3}\s?[0-9]{3,4}$/;
         // Email: Standardni format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        const messageRegex = /^.{10,500}$/s;
 
         let errors = [];
 
@@ -444,9 +446,9 @@ function initContactForm() {
         }
 
         // 5. Provera Poruke (Minimalno 10 karaktera da ne bi slali prazno)
-        if (message.length < 10) {
-            errors.push("Poruka mora imati najmanje 10 karaktera.");
-        }
+        if (!messageRegex.test(message)) {
+    errors.push("Poruka mora imati između 10 i 500 karaktera.");
+}
 
         // LOGIKA PRIKAZA PORUKE
         msgBox.className = "form-message active"; // Resetujemo klase i dodajemo 'active'
