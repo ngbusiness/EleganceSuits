@@ -405,18 +405,69 @@ function initContactForm() {
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
-        const email = document.getElementById('email').value;
-        msgBox.className = "form-message"; 
+        
+        // Prikupljanje svih vrednosti iz forme
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value.trim();
 
-        if (isValidEmail(email)) {
-            msgBox.textContent = "Poruka uspešno poslata!";
-            msgBox.classList.add('active', 'success');
-            form.reset();
-        } else {
-            msgBox.textContent = "Neispravan email.";
-            msgBox.classList.add('active', 'error');
+        // REGEX DEFINICIJE
+        // Ime i Prezime: Dve reči, svaka počinje velikim slovom, min 2 slova (npr. Petar Petrović)
+        const nameRegex = /^[A-ZČĆŽŠĐ][a-zčćžšđ]{1,15}\s[A-ZČĆŽŠĐ][a-zčćžšđ]{1,20}$/;
+        // Telefon: Prihvata 06x... ili +3816x... (9 do 11 cifara ukupno)
+        const phoneRegex = /^(\+381|0)6[0-9]\d{6,8}$/;
+        // Email: Standardni format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        let errors = [];
+
+        // 1. Provera Imena i Prezimena
+        if (!nameRegex.test(name)) {
+            errors.push("Ime i prezime moraju početi velikim slovom (npr. Petar Petrović).");
         }
-        setTimeout(() => msgBox.classList.remove('active'), 4000);
+
+        // 2. Provera Email-a
+        if (!emailRegex.test(email)) {
+            errors.push("Unesite ispravnu email adresu.");
+        }
+
+        // 3. Provera Telefona (opciono polje, ali ako se unese mora biti ispravno)
+        if (phone !== "" && !phoneRegex.test(phone)) {
+            errors.push("Format telefona nije ispravan (npr. 0641234567).");
+        }
+
+        // 4. Provera Teme (Select polje)
+        if (subject === "") {
+            errors.push("Molimo izaberite temu poruke.");
+        }
+
+        // 5. Provera Poruke (Minimalno 10 karaktera da ne bi slali prazno)
+        if (message.length < 10) {
+            errors.push("Poruka mora imati najmanje 10 karaktera.");
+        }
+
+        // LOGIKA PRIKAZA PORUKE
+        msgBox.className = "form-message active"; // Resetujemo klase i dodajemo 'active'
+
+        if (errors.length === 0) {
+            // USPEH
+            msgBox.textContent = "Poruka uspešno poslata! Javićemo vam se uskoro.";
+            msgBox.classList.add('success');
+            msgBox.classList.remove('error');
+            form.reset(); // Brišemo podatke iz forme
+        } else {
+            // GREŠKA - Prikazujemo prvu grešku iz niza radi preglednosti
+            msgBox.textContent = errors[0];
+            msgBox.classList.add('error');
+            msgBox.classList.remove('success');
+        }
+
+        // Automatsko sklanjanje poruke nakon 5 sekundi
+        setTimeout(() => {
+            msgBox.classList.remove('active');
+        }, 5000);
     });
 }
 
@@ -430,27 +481,24 @@ function initNewsletterForm() {
             const emailInput = document.getElementById('newsletter-email');
             const emailValue = emailInput.value.trim();
 
-            msgBox.className = "newsletter-msg"; 
+            msgBox.className = "newsletter-msg active"; 
 
-            if (isValidEmail(emailValue)) {
-                msgBox.textContent = "Uspešno ste se prijavili na našu listu!";
-                msgBox.classList.add('active', 'success');
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+                msgBox.textContent = "Uspešno ste se prijavili!";
+                msgBox.classList.add('success');
+                msgBox.classList.remove('error');
                 emailInput.value = "";
             } else {
-                msgBox.textContent = "Molimo unesite ispravnu email adresu.";
-                msgBox.classList.add('active', 'error');
+                msgBox.textContent = "Neispravan email.";
+                msgBox.classList.add('error');
+                msgBox.classList.remove('success');
             }
 
-            setTimeout(() => {
-                msgBox.classList.remove('active');
-            }, 4000);
+            setTimeout(() => msgBox.classList.remove('active'), 4000);
         });
     }
 }
 
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
 
 // ========================================
 // 8. LOGIKA ZA KORPA.HTML
