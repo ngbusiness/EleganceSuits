@@ -367,12 +367,27 @@ function removeFromCart(id) {
 function initFeaturedProducts() {
     const container = document.getElementById('featured-products');
     if (!container) return;
+
     fetch('data/products.json')
         .then(res => res.json())
         .then(data => {
-            const featured = data.products.filter(p => p.featured);
+            
+            allProducts = data.products; 
+            
+            const featured = allProducts.filter(p => p.featured);
+            
+            
+            if (featured.length === 0) {
+                container.innerHTML = "<p>Trenutno nema izdvojenih proizvoda.</p>";
+                return;
+            }
+
             container.innerHTML = featured.map(p => createProductCard(p)).join('');
-        });
+            
+            
+            updateCartUI();
+        })
+        .catch(err => console.error("Greška na početnoj:", err));
 }
 
 function initNavigation() {
