@@ -448,7 +448,7 @@ function initContactForm() {
         // 5. Provera Poruke (Minimalno 10 karaktera da ne bi slali prazno)
         if (!messageRegex.test(message)) {
     errors.push("Poruka mora imati između 10 i 500 karaktera.");
-}
+        }
 
         // LOGIKA PRIKAZA PORUKE
         msgBox.className = "form-message active"; // Resetujemo klase i dodajemo 'active'
