@@ -81,6 +81,24 @@ p {
     text-align: center;
 }
 
+#close-cart {
+background:none;
+border:none; 
+font-size:2rem; 
+cursor:pointer;
+}
+
+#mini-cart-items{
+    flex:1;
+    overflow-y:auto;
+    margin-top:20px;
+}
+
+#drawer {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 /* Dugmad */
 .btn {
     display: inline-block;
