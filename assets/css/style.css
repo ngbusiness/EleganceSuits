@@ -1108,6 +1108,10 @@ iframe {
 /* 
    O autoru
 */
+
+.features{
+    padding: 60px 0;
+}
 .author-page {
     padding: 80px 0;
 }
